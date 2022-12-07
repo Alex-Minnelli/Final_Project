@@ -26,7 +26,7 @@ export function App() {
     {field: "id", width: 100},
     {field: "first_name", cellRenderer: (params) => <div>{params.data.first_name} <button type='button' onClick={()=>edit('first_name', params)}><i className="fa fa-pencil"></i></button></div>},
     {field: "last_name", cellRenderer: (params) => <div>{params.data.last_name} <button type='button' onClick={()=>edit('last_name', params)}><i className="fa fa-pencil"></i></button></div>},
-    {field: "image", width:100, cellRenderer: (params) => <div><img href={params.data.image} alt='Person'></img></div>},
+    {field: "image", width:100, cellRenderer: (params) => <div><img src={`${params.data.image}`} alt='Person'></img></div>},
     {field: "email", width:300, cellRenderer: (params) => <div>{params.data.email} <button type='button' onClick={()=>edit('email', params)}><i className="fa fa-pencil"></i></button></div>},
     {field: "city", cellRenderer: (params) => <div>{params.data.city} <button type='button' onClick={()=>edit('city', params)}><i className="fa fa-pencil"></i></button></div>},
     {field: "country", cellRenderer: (params) => <div>{params.data.country} <button type='button' onClick={()=>edit('country', params)}><i className="fa fa-pencil"></i></button></div>},
@@ -37,17 +37,35 @@ export function App() {
       sortable: true,
       filter: true,
       resizable: true,
-    };
+  };
+
+  const addPerson = () => {
+    let fName = prompt(`Enter the Person's First Name`)
+    let lName = prompt(`Enter the Person's Last Name`)
+    let image = prompt(`Enter the Person's Image`)
+    let email = prompt(`Enter the Person's Email`)
+    let city = prompt(`Enter the Person's City`)
+    let country = prompt(`Enter the Person's Country`)
+    Axios.post('http://localhost:5100/people/add', {first_name: fName, last_name: lName, image: image, email: email, city: city, country: country})
+    alert(`Person has been added`)
+    Axios.get('http://localhost:5100/people').then((res) => {setRowData(res.data)})
+  }
 
   return (
-    <div className="ag-theme-alpine-dark" style={{ height: 777, width: 'auto' }}>
-      <AgGridReact
-        rowData={rowData}
-        pagination
-        paginationPageSize={20}
-        columnDefs={columnDefs}
-        defaultColDef={defaultColDef}
-      />
+    <div >
+      <div className="parent">
+        <h1 className="title">People</h1>
+        <button className='button' type='button' onClick={()=>addPerson()}>Add Person</button>
+      </div>
+      <div className="ag-theme-alpine-dark" style={{ height: 691, width: 'auto' }}>
+        <AgGridReact
+          rowData={rowData}
+          pagination
+          paginationPageSize={20}
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          />
+      </div>
     </div>
   );
 }

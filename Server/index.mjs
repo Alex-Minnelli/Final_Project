@@ -33,6 +33,13 @@ app.get('/people', async(req, res, next) => {
     }catch(err){next(err)}
 })
 
+
+app.post('/people/add', async (req, res, next) => {
+    try{res.status(200).send(await query('INSERT INTO mock_data (first_name, last_name, image, email, city, country) VALUES (?,?,?,?,?,?)', [req.body.first_name, req.body.last_name, req.body.image, req.body.email, req.body.city, req.body.country]))
+    }catch(err){next(err)}
+})
+
+
 app.put('/people/update/first_name/:id', async(req, res, next) => {
     try{res.status(200).send(await query('UPDATE mock_data SET first_name = ? WHERE id = ?', [req.body.first_name, req.params.id]))
     }catch(err){next(err)}

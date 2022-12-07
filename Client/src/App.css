@@ -7,3 +7,23 @@ button {
 button:hover{
   background-color: #606060;
 }
+
+html, #root > div {
+  background-color: #222628;
+  color: white;
+}
+
+#root > div > div > button{
+  float: right;
+}
+
+.parent{
+  display: flex;
+  justify-content: flex-end;  /* Move to the right */
+  align-items: center;
+}
+
+.parent > .title{
+  justify-content: flex-start !important;
+  margin-right: 78%;
+}
