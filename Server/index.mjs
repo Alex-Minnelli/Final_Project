@@ -65,6 +65,11 @@ app.put('/people/update/country/:id', async(req, res, next) => {
     }catch(err){next(err)}
 })
 
+app.put('/people/update/:id', async(req, res, next) => {
+    try{res.status(200).send(await query('UPDATE mock_data SET first_name = ?, last_name = ?, image = ?, email = ?, city = ?, country = ? WHERE id = ?', [req.body.first_name, req.body.last_name, req.body.image, req.body.email, req.body.city, req.body.country, req.params.id]))
+    }catch(err){next(err)}
+})
+
 
 
 app.delete('/delete/:id', async (req, res, next) => {
