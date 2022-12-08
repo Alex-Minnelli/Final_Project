@@ -22,15 +22,20 @@ export function App() {
     Axios.get('http://localhost:5100/people').then((res) => {setRowData(res.data)})
   }
 
+  const editButton = (params) => {
+    
+  }
+
   const columnDefs = [
     {field: "id", width: 100},
-    {field: "first_name", cellRenderer: (params) => <div>{params.data.first_name} <button type='button' onClick={()=>edit('first_name', params)}><i className="fa fa-pencil"></i></button></div>},
-    {field: "last_name", cellRenderer: (params) => <div>{params.data.last_name} <button type='button' onClick={()=>edit('last_name', params)}><i className="fa fa-pencil"></i></button></div>},
-    {field: "image", width:100, cellRenderer: (params) => <div><img src={`${params.data.image}`} alt='Person'></img></div>},
-    {field: "email", width:300, cellRenderer: (params) => <div>{params.data.email} <button type='button' onClick={()=>edit('email', params)}><i className="fa fa-pencil"></i></button></div>},
-    {field: "city", cellRenderer: (params) => <div>{params.data.city} <button type='button' onClick={()=>edit('city', params)}><i className="fa fa-pencil"></i></button></div>},
-    {field: "country", cellRenderer: (params) => <div>{params.data.country} <button type='button' onClick={()=>edit('country', params)}><i className="fa fa-pencil"></i></button></div>},
-    {headerName: 'Delete', width: 100, cellRenderer: (params) => <div><button type='button' onClick={()=>deleteButton(params)}><i className="fa fa-trash"></i></button></div>}
+    {field: "first_name",editable: true, cellRenderer: (params) => <div>{params.data.first_name} <button type='button' onClick={()=>edit('first_name', params)}><i className="fa fa-pencil"></i></button></div>},
+    {field: "last_name",editable: true, cellRenderer: (params) => <div>{params.data.last_name} <button type='button' onClick={()=>edit('last_name', params)}><i className="fa fa-pencil"></i></button></div>},
+    {field: "image",editable: true, width:100, cellRenderer: (params) => <div><img src={`${params.data.image}`} alt='Person'></img></div>},
+    {field: "email",editable: true, width:300, cellRenderer: (params) => <div>{params.data.email} <button type='button' onClick={()=>edit('email', params)}><i className="fa fa-pencil"></i></button></div>},
+    {field: "city",editable: true, cellRenderer: (params) => <div>{params.data.city} <button type='button' onClick={()=>edit('city', params)}><i className="fa fa-pencil"></i></button></div>},
+    {field: "country",editable: true, cellRenderer: (params) => <div>{params.data.country} <button type='button' onClick={()=>edit('country', params)}><i className="fa fa-pencil"></i></button></div>},
+    {headerName: 'Delete', width: 100,editable: true, cellRenderer: (params) => <div><button type='button' onClick={()=>deleteButton(params)}><i className="fa fa-trash"></i></button></div>},
+    {headerName: 'Edit(NON FUNCTIONAL ATM)', width: 100,editable: true, cellRenderer: (params) => <div><button type='button' onClick={()=>editButton(params)}><i className="fa fa-pencil"></i></button></div>},
   ];
 
   const defaultColDef = {
@@ -52,7 +57,7 @@ export function App() {
   }
 
   return (
-    <div >
+    <div>
       <div className="parent">
         <h1 className="title">People</h1>
         <button className='button' type='button' onClick={()=>addPerson()}>Add Person</button>
@@ -61,7 +66,7 @@ export function App() {
         <AgGridReact
           rowData={rowData}
           pagination
-          paginationPageSize={20}
+          paginationPageSize={50}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           />
